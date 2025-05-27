@@ -1,0 +1,363 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        {% include 'head.html' %}
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/js/all.min.js"
+                integrity="sha512-RXf+QSDCUQs5uwRKaDoXt55jygZZm2V++WUZduaU/Ui/9EGp3f/2KZVahFZBKGH0s774sd3HmrhUy+SgOFQLVQ=="
+                crossorigin="anonymous"></script>
+        <title>Results | {{ constants.sitetitle }}</title>
+        <link href="{{ url_for('static', filename='css/reprdeg.css') }}"
+              rel="stylesheet">
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/camanjs/4.1.2/caman.full.min.js"
+                integrity="sha512-JjFeUD2H//RHt+DjVf1BTuy1X5ZPtMl0svQ3RopX641DWoSilJ89LsFGq4Sw/6BSBfULqUW/CfnVopV5CfvRXA=="
+                crossorigin="anonymous"
+                referrerpolicy="no-referrer"></script>
+    </head>
+    <body>
+        <div class="container">
+            {% include 'header.html' %}
+            <div class="row justify-content-center">
+                <div class="col-lg-12">
+                    <ul class="nav nav-tabs">
+                        <li class="nav-item">
+                            <a href="#home"
+                               class="nav-link active"
+                               role="tab"
+                               data-toggle="tab"
+                               id="first_page"></a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="#plot_dataset1"
+                               class="nav-link"
+                               role="tab"
+                               data-toggle="tab"
+                               id="second_page"></a>
+                        </li>
+                    </ul>
+                </div>
+                <div class="col-lg-9 mb-5">
+                    <div class="tab-content pt-3">
+                        <div role="tabpanel" class="tab-pane active" id="home">
+                            <div>
+                                <p class="h4 text-center ">
+                                    <b>Ψ equals <code>{{ pvalue }}</code> for the provided datasets
+                                    </p>
+                                </b>
+                                <p id="method_used" class="h6 font-italic text-center mb-4 "></p>
+                                <br>
+                                <small><p id="sub_p"></p></small>
+                                <br>
+                                <div id="container" class="img-comp-container mb-4">
+                                    <div class="img-comp-img">
+                                        <img id="img_original"
+                                             src="{{ url_for('static', filename='img/canvas_100.png') }}">
+                                    </div>
+                                    <div class="img-comp-img img-comp-overlay">
+                                        <img id="img_grainy"
+                                             src="{{ url_for('static', filename='img/canvas_100.png') }}">
+                                    </div>
+                                </div>
+                                <div class="container mb-4 comparators">
+                                    <div class="row d-flex align-items-stretch">
+                                        <div class="col-sm">
+                                            <div class="card">
+                                                <img class="card-img-top"
+                                                     src="{{ url_for('static', filename='img/canvas_100.png') }}"
+                                                     alt="Card image cap">
+                                                <div class="card-body">
+                                                    <h5 class="card-title">Ψ = 100%</h5>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-sm">
+                                            <div class="card">
+                                                <img class="card-img-top"
+                                                     src="{{ url_for('static', filename='img/canvas_75.png') }}"
+                                                     alt="Card image cap">
+                                                <div class="card-body">
+                                                    <h5 class="card-title">Ψ = 75%</h5>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-sm">
+                                            <div class="card">
+                                                <img class="card-img-top"
+                                                     src="{{ url_for('static', filename='img/canvas_50.png') }}"
+                                                     alt="Card image cap">
+                                                <div class="card-body">
+                                                    <h5 class="card-title">Ψ = 50%</h5>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-sm">
+                                            <div class="card">
+                                                <img class="card-img-top"
+                                                     src="{{ url_for('static', filename='img/canvas_25.png') }}"
+                                                     alt="Card image cap">
+                                                <div class="card-body">
+                                                    <h5 class="card-title">Ψ = 25%</h5>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-sm">
+                                            <div class="card">
+                                                <img class="card-img-top"
+                                                     src="{{ url_for('static', filename='img/canvas_0.png') }}"
+                                                     alt="Card image cap">
+                                                <div class="card-body">
+                                                    <h5 class="card-title">Ψ = 0%</h5>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <small>
+                                    <p>
+                                        <strong>Practical Implications</strong>:<br>
+                                        <t>&nbsp;&nbsp;&nbsp;<i>Low Similarity</i>: Data points with low similarity to the model’s training set should be approached with caution, as predictions based on these points may be unreliable.</t><br>
+                                        <t>&nbsp;&nbsp;&nbsp;<i>High Performance on Dissimilar Test Sets</i>: If a test set shows little similarity to the training set yet the model performs adequately, this suggests that the model possesses a commendable degree of reliability and robustness.</t>
+                                        <br><br>
+                                        <strong>Qualitative Assessment</strong>:<br>
+                                        <t>&nbsp;&nbsp;&nbsp;<i>Missing Details</i>: The inability to discern detailed elements, such as a cross in the foreground or the USA flag, indicates significant dissimilarity between the datasets.</t><br>
+                                        <t>&nbsp;&nbsp;&nbsp;<i>Broad Features</i>: The absence of broader features, like billboards or the silhouette of a central skyscraper, implies almost complete disparity.</t>
+                                        <br><br>
+                                        This approach provides both a qualitative and quantitative framework for evaluating how representative a dataset is in relation to the conditions under which the model was developed.
+                                    </p>
+                                </small>
+                            </div>
+                        </div>
+                        <div role="tabpanel" class="tab-pane" id="plot_dataset1">
+                            <div class="row">
+                                <img src="data:image/jpg;base64, {{ plot_dataset1a }}"
+                                     class="rotate-image col col-md">
+                                <fieldset style="display: inline-block;">
+                                    <legend class="h5">Dataset:</legend>
+                                    <p>
+                                        <div style="display: inline; color:#1f77b4" class="fa fa-square"></div>
+                                        <p style="display: inline">{{ dataset_name_set1 }}</p>
+                                    </p>
+                                    <p>
+                                        <div style="display: inline; color:#ff7f0e" class="fa fa-square"></div>
+                                        <p style="display: inline">{{ dataset_name_set2 }}</p>
+                                    </p>
+                                </fieldset>
+                                <img src="data:image/jpg;base64, {{ plot_dataset1b }}"
+                                     class="img-plot1 col col-md">
+                            </div>
+                            <div>
+                                <small>
+                                    <p id="interpretation2"></p>
+                                </small>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- <button type="button"
+                            onclick="history.back()"
+                            class="btn btn-info mb-5"
+                            style="margin-top: 25px">
+                        <div style="display: inline" class="fas fa-arrow-left"></div>
+                        <div id="back_home" style="display: inline"></div>
+                    </button> -->
+                </div>
+            </div>
+            {% include 'footer.html' %}
+        </div>
+    </div>
+    <script>
+    function set_cookie(cname, cvalue, exdays) {
+        const d = new Date();
+        d.setTime(d.getTime() + (exdays * 24 * 60 * 60 * 1000));
+        let expires = "expires="+d.toUTCString();
+        document.cookie = cname + "=" + cvalue + ";" + expires + ";path=/";
+    }
+
+    function get_cookie(cname){
+        let name = cname + "=";
+        let ca = document.cookie.split(';');
+        for(let i = 0; i < ca.length; i++) {
+            let c = ca[i];
+            while (c.charAt(0) == ' ') {
+                c = c.substring(1);
+            }
+            if (c.indexOf(name) == 0) {
+                return c.substring(name.length, c.length);
+            }
+        }
+        return "";
+    }
+    </script>
+    <script>
+    var language = {
+      eng:{
+        title: "Data similarity Assessment",
+        scope: "Online tool to compute and visualize the degree of correspondence Ψ (psi) <br class='d-none d-lg-block'>to represent the similarity between two datasets",
+        method_used: "Test method used: Kolmogorov-Smirnov with 200 iterations",
+        sub_p: "The degree of correspondence is reported above. The following visualization represents the similarity between a dataset (or a specific data point) and a reference dataset in a more qualitative way (it's a 'vague visualization'). Lower similarity scores are depicted through a grainier image with diminished details compared to the original, indicating less resemblance.",
+        help: "Show me the interpretation of the score ",
+        help2: "Show me the interpretation of the score ",
+        title_modal: "Interpretation of the score",
+        title_modal2: "Interpretation of the score",
+        interpretation: "This visualization illustrates the extent to which a dataset (or a data point) is similar to a reference dataset: lower scores indicate lower similarity, and are represented by a grainier image, with fewer details noticeable from the original one. Practically speaking, predictions made on data points originating from a dataset with little representativeness of the model's training set should be taken with great caution, and considered potentially unreliable. Conversely, if a test set is found to have little to no similarity to the larger training set, and the performance of the predictive model on this test set is good or acceptable, then the model could be considered of sufficient reliability and robustness. On a qualitative level, if one cannot detect picture elements such as the cross in the foreground or the USA flag, then the datasets are highly different. If one cannot detect the larger billboards, or the silhouette of the skyscraper building in the middle of the picture, this most probably means the two datasets are almost completely different. This assessment is qualitative in nature.",
+        interpretation2: "On the left, scatter plot of the two most important features, obtained through the SelectKBest method, and the mutual_info_classif metric; each data point is a case/instance in each dataset. On the right, the diagrams of the density and the cumulative distribution function of the first principal component of the union set of the datasets. Data are standardized.",
+        back_home: "Back",
+        first_page: "Home",
+        second_page: "Diagrams"
+      },
+      ita:{
+        title: "Valutazione della similarità dei dati",
+        scope: "Strumento online che calcola il grado di corrispondenza (psi), o di similarità tra due dataset",
+        method_used: "Test usato: Kolmogorov-Smirnov con 200 iterations",
+        help: "Mostrami l'interpretazione del risultato ",
+        help2: "Mostrami l'interpretazione del risultato ",
+        title_modal: "Interpretazione del risultato",
+        title_modal2: "Interpretazione del risultato",
+        interpretation: "Questa visualizzazione rappresenta (in termini visivi) la misura in cui un dataset (o un data point) è simile a (o rappresentativo di) un dataset di riferimento. Più basso è il punteggio, più sgranata è l'immagine, meno dettagli si notano rispetto all'immagine originale e meno simili sono i due dataset (o meno rappresentativo è il campione più piccolo rispetto a quello più grande da cui è stato estratto). In pratica, le previsioni fatte da un modello predittivo/classificativo su data points che sono (presi da un dataset cioè) poco rappresentativi del training set del modello, dovrebbero essere prese con grande cautela e considerate potenzialmente inaffidabili. Al contrario, se un test set risulta poco (o per niente) rappresentativo del training set più grande e le prestazioni di un modello predittivo testato su questo set precedente sono buone o accettabili, allora il modello potrebbe essere considerato di sufficiente affidabilità e robustezza. A un livello molto qualitativo, se non riesci a rilevare elementi dell'immagine come la croce davanti a te o la bandiera americana, allora hai a che fare con un dataset molto diverso. Se non riesci a rilevare i cartelloni pubblicitari più grandi o la sagoma del grattacielo al centro dell'immagine, il tuo dataset è quasi totalmente diverso dall'altro. Questa è una valutazione qualitativa!",
+        interpretation2: "A sinistra, un grafico a dispersione delle 2 caratteristiche più importanti calcolate con il metodo SelectKBest e la metrica mutual_info_classif; ogni punto è un caso/istanza in ogni set di dati. A destra, i diagrammi della densità e della funzione di distribuzione cumulativa del primo componente principale dell'unione dei dataset. I dati sono standardizzati.",
+        back_home: "Torna indietro",
+        first_page: "Home",
+        second_page: "Diagrammi"
+      }
+    }
+
+    function load_language(l = "eng") {
+        if(typeof language[l] === "undefined"){
+            l="eng";
+        }
+        set_cookie("language", l, 30);
+        for (const key in language[l]) {
+            element = document.getElementById(key)
+            if (element)
+            element.innerHTML = language[l][key];
+        }
+    }
+    var cookie_language = get_cookie("language");
+    load_language(cookie_language);
+    </script>
+    <script>
+    TurnInCanvas(document.getElementById("img_grainy"))
+    function TurnInCanvas(obj) {
+        Caman(obj, function() {
+            this.render();
+            SwapPixel({{pvalue_percent}}, "img_grainy");
+            $("#img_grainy").height($("#img_original").height());
+            $("#container").height($("#img_original").height());
+            $( window ).resize(function() {
+                $("#img_grainy").height($("#img_original").height());
+                $("#container").height($("#img_original").height());
+            });
+            initComparisons();
+        });
+    }
+
+    function SwapPixel(n, id) {
+        n = 100 - n;
+
+        let img = document.getElementById(id);
+
+        let canvasWidth = img.width;
+        let canvasHeight = img.height;
+
+        let ctx = img.getContext('2d');
+        let imageData = ctx.getImageData(0, 0, canvasWidth, canvasHeight);
+
+        //importo i dati salvati per riapplicare la funzione dall'inizio
+        let data = imageData.data;
+
+        //faccio passare un pixel alla volta
+        for (let y = 0; y < canvasHeight; y++) {
+            for (let x = 0; x < canvasWidth; x++) {
+                let index = (y * canvasWidth + x) * 4;
+                let index2 = Math.round(Math.random() * canvasWidth * canvasHeight) * 4;
+                //console.log('SwapIteration');
+                if ((Math.random() * 100) < n) {
+                    //scambio i pixel
+						[data[index], data[index2]] = [data[index2], data[index]];
+						[data[index + 1], data[index2 + 1]] = [data[index2 + 1], data[index + 1]];
+						[data[index + 2], data[index2 + 2]] = [data[index2 + 2], data[index + 2]];
+                }
+            }
+        }
+        ctx.putImageData(imageData, 0, 0);
+    }
+    </script>
+    <script>
+    function initComparisons() {
+        var x, i;
+        /*find all elements with an "overlay" class:*/
+        x = document.getElementsByClassName("img-comp-overlay");
+        for (i = 0; i < x.length; i++) {
+            /*once for each "overlay" element:
+            pass the "overlay" element as a parameter when executing the compareImages function:*/
+            compareImages(x[i]);
+        }
+        function compareImages(img) {
+            var slider, img, clicked = 0, w, h;
+                w = img.offsetWidth;
+                h = img.offsetHeight;
+                img.style.width = (w / 2) + "px";
+                slider = document.createElement("div");
+                slider.setAttribute("class", "img-comp-slider");
+                img.parentElement.insertBefore(slider, img);
+                slider.style.top = (h / 2) - (slider.offsetHeight / 2) + "px";
+                slider.style.left = (w / 2) - (slider.offsetWidth / 2) + "px";
+                slider.addEventListener("mousedown", slideReady);
+                window.addEventListener("mouseup", slideFinish);
+                slider.addEventListener("touchstart", slideReady);
+                window.addEventListener("touchend", slideFinish);
+            $( window ).resize(function() {
+                img.style.width = "100%";
+                w = img.offsetWidth;
+                h = img.offsetHeight;
+                img.style.width = (w / 2) + "px";
+
+                slider.style.top = (h / 2) - (slider.offsetHeight / 2) + "px";
+                slider.style.left = (w / 2) - (slider.offsetWidth / 2) + "px";
+            });
+
+            function slideReady(e) {
+                /*prevent any other actions that may occur when moving over the image:*/
+                e.preventDefault();
+                /*the slider is now clicked and ready to move:*/
+                clicked = 1;
+                /*execute a function when the slider is moved:*/
+                window.addEventListener("mousemove", slideMove);
+                window.addEventListener("touchmove", slideMove);
+            }
+            function slideFinish() {
+                /*the slider is no longer clicked:*/
+                clicked = 0;
+            }
+            function slideMove(e) {
+                var pos;
+                /*if the slider is no longer clicked, exit this function:*/
+                if (clicked == 0) return false;
+                /*get the cursor's x position:*/
+                pos = getCursorPos(e)
+                /*prevent the slider from being positioned outside the image:*/
+                if (pos < 0) pos = 0;
+                if (pos > w) pos = w;
+                /*execute a function that will resize the overlay image according to the cursor:*/
+                slide(pos);
+            }
+            function getCursorPos(e) {
+                var a, x = 0;
+                e = e || window.event;
+                /*get the x positions of the image:*/
+                a = img.getBoundingClientRect();
+                /*calculate the cursor's x coordinate, relative to the image:*/
+                x = e.pageX - a.left;
+                /*consider any page scrolling:*/
+                x = x - window.pageXOffset;
+            return x;
+            }
+            function slide(x) {
+                /*resize the image:*/
+                img.style.width = x + "px";
+                /*position the slider:*/
+                slider.style.left = img.offsetWidth - (slider.offsetWidth / 2) + "px";
+            }
+        }
+    }
+    </script>
+    {% include 'metatool.html' %}
+</body>
